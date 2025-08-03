@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{NOTIFICATION_TYPE}} - {{COMPANY_NAME}}</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: 20px auto;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            border-top: 4px solid {{PRIORITY_COLOR}};
+        }
+        .email-header {
+            background: {{HEADER_BG_COLOR}};
+            color: white;
+            padding: 25px 30px;
+            text-align: center;
+        }
+        .email-header h1 {
+            margin: 0;
+            font-size: 22px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .email-header .icon {
+            font-size: 24px;
+        }
+        .email-content {
+            padding: 30px;
+        }
+        .notification-box {
+            background: {{NOTIFICATION_BG}};
+            border: 1px solid {{NOTIFICATION_BORDER}};
+            border-left: 4px solid {{PRIORITY_COLOR}};
+            padding: 20px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+        .notification-box h3 {
+            margin-top: 0;
+            color: {{PRIORITY_COLOR}};
+            font-size: 18px;
+        }
+        .notification-meta {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+        .notification-meta .meta-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            padding: 5px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+        .notification-meta .meta-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+        .notification-meta .meta-label {
+            font-weight: 600;
+            color: #495057;
+        }
+        .notification-meta .meta-value {
+            color: #6c757d;
+        }
+        .action-buttons {
+            text-align: center;
+            margin: 25px 0;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            margin: 5px 10px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+        .btn-primary {
+            background: {{PRIORITY_COLOR}};
+            color: white;
+        }
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        .priority-high { --priority-color: #dc3545; --header-bg: #dc3545; --notification-bg: #f8d7da; --notification-border: #f5c6cb; }
+        .priority-medium { --priority-color: #fd7e14; --header-bg: #fd7e14; --notification-bg: #fff3cd; --notification-border: #ffeaa7; }
+        .priority-low { --priority-color: #17a2b8; --header-bg: #17a2b8; --notification-bg: #d1ecf1; --notification-border: #b6d4ea; }
+        .priority-info { --priority-color: #007bff; --header-bg: #007bff; --notification-bg: #d1ecf1; --notification-border: #b6d4ea; }
+        .email-footer {
+            background: #f8f9fa;
+            padding: 20px 30px;
+            text-align: center;
+            font-size: 12px;
+            color: #6c757d;
+            border-top: 1px solid #e9ecef;
+        }
+        .email-footer p {
+            margin: 5px 0;
+        }
+        .timestamp {
+            font-size: 12px;
+            color: #6c757d;
+            font-style: italic;
+        }
+        @media only screen and (max-width: 600px) {
+            .email-container {
+                margin: 10px;
+                border-radius: 6px;
+            }
+            .email-header,
+            .email-content {
+                padding: 20px;
+            }
+            .notification-box,
+            .notification-meta {
+                padding: 15px;
+            }
+            .meta-item {
+                flex-direction: column;
+                gap: 5px;
+            }
+            .btn {
+                display: block;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body class="priority-{{PRIORITY_LEVEL}}">
+    <div class="email-container">
+        <div class="email-header">
+            <h1>
+                <span class="icon">{{NOTIFICATION_ICON}}</span>
+                {{NOTIFICATION_TYPE}}
+            </h1>
+        </div>
+        
+        <div class="email-content">
+            <div class="notification-box">
+                <h3>{{NOTIFICATION_TITLE}}</h3>
+                <p>{{NOTIFICATION_MESSAGE}}</p>
+            </div>
+            
+            <div class="notification-meta">
+                <div class="meta-item">
+                    <span class="meta-label">Timestamp:</span>
+                    <span class="meta-value">{{TIMESTAMP}}</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Priority:</span>
+                    <span class="meta-value">{{PRIORITY_LEVEL}}</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Source:</span>
+                    <span class="meta-value">{{NOTIFICATION_SOURCE}}</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Reference ID:</span>
+                    <span class="meta-value">{{REFERENCE_ID}}</span>
+                </div>
+            </div>
+            
+            {{#ACTION_REQUIRED}}
+            <div class="action-buttons">
+                <a href="{{PRIMARY_ACTION_URL}}" class="btn btn-primary">{{PRIMARY_ACTION_TEXT}}</a>
+                {{#SECONDARY_ACTION_URL}}
+                <a href="{{SECONDARY_ACTION_URL}}" class="btn btn-secondary">{{SECONDARY_ACTION_TEXT}}</a>
+                {{/SECONDARY_ACTION_URL}}
+            </div>
+            {{/ACTION_REQUIRED}}
+            
+            <p><strong>Additional Information:</strong></p>
+            <p>{{ADDITIONAL_INFO}}</p>
+            
+            <div class="timestamp">
+                <p>This notification was generated automatically by our system. If you believe this message was sent in error, please contact our support team.</p>
+            </div>
+        </div>
+        
+        <div class="email-footer">
+            <p><strong>{{COMPANY_NAME}} Notification System</strong></p>
+            <p>{{COMPANY_ADDRESS}}</p>
+            <p>For support, please visit <a href="{{SUPPORT_URL}}">{{SUPPORT_URL}}</a> or reply to this email.</p>
+            <p>&copy; 2024 {{COMPANY_NAME}}. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>
